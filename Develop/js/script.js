@@ -9,6 +9,7 @@ function createTimeBlock() {
     if (currentHour == 9) {
         timeBlock.find("textarea").addClass("present");
     }
+    timeBlock.find("textarea").val(loadTimeBlock(9));
 
     var meridiem = "am";
 
@@ -38,4 +39,21 @@ function createTimeBlock() {
         }
         clone.appendTo(".container");
     }
+    // when the save button is clicked it will target the closest object with the row class and save that row
+    $("button").click(function (event) {
+        var currentRow = event.target.closest(".row");
+        saveTimeBlock(currentRow.id, $(currentRow).find("textarea").val());
+    })
 }
+
+// save time block
+function saveTimeBlock(id, text) {
+    localStorage.setItem("timeblock" + id, text);
+}
+
+// load time block
+function loadTimeBlock(id) {
+    return localStorage.getItem("timeblock" + id);
+}
+
+createTimeBlock();
